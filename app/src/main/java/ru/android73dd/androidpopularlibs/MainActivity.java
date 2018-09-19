@@ -1,6 +1,7 @@
 package ru.android73dd.androidpopularlibs;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -19,6 +20,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView
     Button buttonTwo;
     @BindView(R.id.btn_three)
     Button buttonThree;
+    EventBus eventBus;
 
     @InjectPresenter MainPresenter presenter;
 
@@ -28,6 +30,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        eventBus = new EventBusImplementation();
     }
 
     @ProvidePresenter
@@ -36,6 +39,15 @@ public class MainActivity extends MvpAppCompatActivity implements MainView
         presenter = new MainPresenter();
         //TO SOMETHING WITH PRESENTER
         return presenter;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.eventBus
+                .observable(EventClass.class)
+                .subscribe(event -> Log.d("AAAAA", String.valueOf(event.getMessage())));
+        this.eventBus.post(new EventClass("AdditionalData"));
     }
 
     @OnClick({R.id.btn_one, R.id.btn_two, R.id.btn_three})
