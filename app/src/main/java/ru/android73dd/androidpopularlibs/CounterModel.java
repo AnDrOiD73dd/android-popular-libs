@@ -3,41 +3,21 @@ package ru.android73dd.androidpopularlibs;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.subjects.PublishSubject;
+import io.reactivex.Observable;
 
 
-public class CounterModel
-{
-    List<Integer> counters;
-    List<PublishSubject<Integer>> subjects;
+public class CounterModel {
+    private List<Integer> counters;
 
-    public CounterModel()
-    {
+    public CounterModel() {
         counters = new ArrayList<>();
         counters.add(0);
         counters.add(0);
         counters.add(0);
-        subjects = new ArrayList<>();
-        PublishSubject<Integer> subject1 = PublishSubject.create();
-        PublishSubject<Integer> subject2 = PublishSubject.create();
-        PublishSubject<Integer> subject3 = PublishSubject.create();
-        subjects.add(subject1);
-        subjects.add(subject2);
-        subjects.add(subject3);
     }
 
-    public void calculate(int index)
-    {
-        int value = counters.get(index) + 1;
-        counters.set(index, value);
-        subjects.get(index).onNext(value);
-    }
-
-    public PublishSubject<Integer> getSubject(int index) {
-        return subjects.get(index);
-    }
-
-    public List<PublishSubject<Integer>> getSubjects() {
-        return subjects;
+    public Observable<Integer> calculate(int index) {
+        counters.set(index, counters.get(index) + 1);
+        return Observable.just(counters.get(index));
     }
 }
