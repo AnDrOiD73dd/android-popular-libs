@@ -6,13 +6,22 @@ import com.arellomobile.mvp.MvpPresenter;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import ru.android73dd.androidpopularlibs.bus.EventBus;
+import ru.android73dd.androidpopularlibs.bus.EventBusImpl;
+import ru.android73dd.androidpopularlibs.bus.EventClass;
+
 
 @InjectViewState
 public class MainPresenter extends MvpPresenter<MainView> {
+    private final EventBus eventBus;
     private CounterModel model;
 
     public MainPresenter() {
         this.model = new CounterModel();
+        eventBus = new EventBusImpl();
+        this.eventBus
+                .observable(EventClass.class)
+                .subscribe(event -> getViewState().showInfo(String.valueOf(event.getMessage())));
     }
 
     public void onButtonOneClick() {
@@ -26,6 +35,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
             @Override
             public void onNext(Integer integer) {
                 getViewState().updateButtonOneText(String.valueOf(integer));
+                eventBus.post(new EventClass("EventBus: Value1 has been changed"));
             }
 
             @Override
@@ -51,6 +61,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
             @Override
             public void onNext(Integer integer) {
                 getViewState().updateButtonTwoText(String.valueOf(integer));
+                eventBus.post(new EventClass("EventBus: Value2 has been changed"));
             }
 
             @Override

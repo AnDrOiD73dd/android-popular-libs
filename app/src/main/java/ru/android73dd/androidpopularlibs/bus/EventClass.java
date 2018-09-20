@@ -1,6 +1,6 @@
-package ru.android73dd.androidpopularlibs;
+package ru.android73dd.androidpopularlibs.bus;
 
-class EventClass<T> {
+public class EventClass<T> {
 
     private T message;
 

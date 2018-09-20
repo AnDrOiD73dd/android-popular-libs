@@ -1,4 +1,4 @@
-package ru.android73dd.androidpopularlibs;
+package ru.android73dd.androidpopularlibs.bus;
 
 
 import android.support.annotation.NonNull;
@@ -8,11 +8,11 @@ import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
-public class EventBusImplementation implements EventBus {
+public class EventBusImpl implements EventBus {
 
     private final Subject<Object, Object> bus = new SerializedSubject<>(PublishSubject.create());
 
-    public EventBusImplementation() {
+    public EventBusImpl() {
     }
 
     @Override

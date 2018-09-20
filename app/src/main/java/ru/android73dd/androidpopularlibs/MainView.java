@@ -11,4 +11,6 @@ public interface MainView extends MvpView {
     void updateButtonTwoText(String text);
 
     void updateButtonThreeText(String text);
+
+    void showInfo(String s);
 }
