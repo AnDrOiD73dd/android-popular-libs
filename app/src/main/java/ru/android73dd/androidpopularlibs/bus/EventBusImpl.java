@@ -1,16 +1,18 @@
 package ru.android73dd.androidpopularlibs.bus;
 
-
 import android.support.annotation.NonNull;
 
-import rx.Observable;
-import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
+
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
+
 
 public class EventBusImpl implements EventBus {
 
-    private final Subject<Object, Object> bus = new SerializedSubject<>(PublishSubject.create());
+    public static final String UPDATE_UI_EVENT = "event to update UI";
+
+    private final Subject<Object> bus = PublishSubject.create();
 
     public EventBusImpl() {
     }
@@ -19,6 +21,13 @@ public class EventBusImpl implements EventBus {
     public void post(@NonNull Object event) {
         if (this.bus.hasObservers()) {
             this.bus.onNext(event);
+        }
+    }
+
+    @Override
+    public void postUpdateUi() {
+        if (this.bus.hasObservers()) {
+            this.bus.onNext(new EventClass<>(UPDATE_UI_EVENT));
         }
     }
 

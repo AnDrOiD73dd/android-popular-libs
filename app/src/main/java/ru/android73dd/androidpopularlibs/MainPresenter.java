@@ -36,6 +36,9 @@ public class MainPresenter extends MvpPresenter<MainView> {
             public void onNext(Integer integer) {
                 getViewState().updateButtonOneText(String.valueOf(integer));
                 eventBus.post(new EventClass("EventBus: Value1 has been changed"));
+                if (integer == 2) {
+                    eventBus.postUpdateUi();
+                }
             }
 
             @Override
