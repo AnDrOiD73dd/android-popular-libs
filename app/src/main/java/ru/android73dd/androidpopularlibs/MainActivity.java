@@ -2,6 +2,7 @@ package ru.android73dd.androidpopularlibs;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -10,6 +11,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 
 public class MainActivity extends MvpAppCompatActivity implements MainView
 {
@@ -68,5 +70,10 @@ public class MainActivity extends MvpAppCompatActivity implements MainView
     @Override
     public void updateButtonThreeText(String text) {
         buttonThree.setText(text);
+    }
+
+    @Override
+    public void showInfo(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
