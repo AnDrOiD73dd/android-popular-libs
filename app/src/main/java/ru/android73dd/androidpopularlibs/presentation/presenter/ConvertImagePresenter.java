@@ -4,12 +4,15 @@ package ru.android73dd.androidpopularlibs.presentation.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
+import java.io.InputStream;
+
 import io.reactivex.CompletableObserver;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.android73dd.androidpopularlibs.model.FileManager;
 import ru.android73dd.androidpopularlibs.presentation.view.ConvertImageView;
+
 
 @InjectViewState
 public class ConvertImagePresenter extends MvpPresenter<ConvertImageView> {
@@ -72,5 +75,35 @@ public class ConvertImagePresenter extends MvpPresenter<ConvertImageView> {
     }
 
     public void onGrantStoragePermissionFail() {
+    }
+
+    public void onImageSelectedError() {
+        getViewState().updateStatus("Error");
+    }
+
+    public void onImageSelected(InputStream stream) {
+        fileManager.convertImage(stream)
+                .subscribeOn(Schedulers.io())
+                .observeOn(androidMainThreadScheduler)
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                        getViewState().updateStatus("Converting image in progress...");
+                        getViewState().showCancelButton();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        getViewState().hideCancelButton();
+                        getViewState().updateStatus("Image was successfully converted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getViewState().hideCancelButton();
+                        getViewState().updateStatus("Error");
+                    }
+                });
     }
 }

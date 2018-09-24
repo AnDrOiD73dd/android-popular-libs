@@ -5,15 +5,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +19,9 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +33,7 @@ import ru.android73dd.androidpopularlibs.model.FileManagerImpl;
 import ru.android73dd.androidpopularlibs.model.PermissionUtil;
 import ru.android73dd.androidpopularlibs.presentation.presenter.ConvertImagePresenter;
 import ru.android73dd.androidpopularlibs.presentation.view.ConvertImageView;
+
 
 public class ConvertImageActivity extends MvpAppCompatActivity implements ConvertImageView {
 
@@ -64,7 +66,8 @@ public class ConvertImageActivity extends MvpAppCompatActivity implements Conver
 
     @ProvidePresenter
     public ConvertImagePresenter providePresenter() {
-        return new ConvertImagePresenter(AndroidSchedulers.mainThread(), new FileManagerImpl());
+        return new ConvertImagePresenter(AndroidSchedulers.mainThread(),
+                new FileManagerImpl(getExternalFilesDir(Environment.DIRECTORY_PICTURES)));
     }
 
     @OnClick(R.id.floating_action_button)
@@ -156,26 +159,19 @@ public class ConvertImageActivity extends MvpAppCompatActivity implements Conver
             case REQUEST_CODE_SELECT_IMAGE:
                 if (resultCode == Activity.RESULT_OK) {
                     Uri imageUri = data.getData();
-                    String imagePath = getRealPathFromURI(imageUri);
-                    if (imageUri != null) {
-                        convertImagePresenter.onImageSelected(imagePath);
+                    if (imageUri == null) {
+                        convertImagePresenter.onImageSelectedError();
+                        return;
+                    }
+                    try {
+                        InputStream stream = getContentResolver().openInputStream(imageUri);
+                        convertImagePresenter.onImageSelected(stream);
+                    } catch (FileNotFoundException e) {
+                        Logger.e("%s", e);
+                        convertImagePresenter.onImageSelectedError();
                     }
                 }
                 break;
         }
-    }
-
-    private String getRealPathFromURI(Uri contentURI) {
-        String result;
-        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) {
-            result = contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
-        }
-        return result;
     }
 }
