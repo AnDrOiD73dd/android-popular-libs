@@ -8,6 +8,7 @@ import java.io.InputStream;
 
 import io.reactivex.CompletableObserver;
 import io.reactivex.Scheduler;
+import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.android73dd.androidpopularlibs.model.FileManager;
@@ -85,7 +86,7 @@ public class ConvertImagePresenter extends MvpPresenter<ConvertImageView> {
         fileManager.convertImage(stream)
                 .subscribeOn(Schedulers.io())
                 .observeOn(androidMainThreadScheduler)
-                .subscribe(new CompletableObserver() {
+                .subscribe(new SingleObserver<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable = d;
@@ -94,9 +95,9 @@ public class ConvertImagePresenter extends MvpPresenter<ConvertImageView> {
                     }
 
                     @Override
-                    public void onComplete() {
+                    public void onSuccess(String s) {
                         getViewState().hideCancelButton();
-                        getViewState().updateStatus("Image was successfully converted");
+                        getViewState().updateStatus("Image was successfully converted to " + s);
                     }
 
                     @Override

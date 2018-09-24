@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import io.reactivex.Completable;
+import io.reactivex.Single;
 
 
 public class FileManagerImpl implements FileManager {
@@ -73,14 +74,14 @@ public class FileManagerImpl implements FileManager {
     }
 
     @Override
-    public Completable convertImage(InputStream stream) {
-        return Completable.create(emitter -> {
+    public Single<String> convertImage(InputStream stream) {
+        return Single.create(emitter -> {
             try {
                 Thread.sleep(new Random().nextInt(3000) + 1000);
                 byte[] originalBytes = getByteArrayFromStream(stream);
                 byte[] convertedBytes = convertToPng(originalBytes);
                 File file = createImageFile(storageDir, generateFileName(), PNG_SUFFIX, convertedBytes);
-                emitter.onComplete();
+                emitter.onSuccess(file.getAbsolutePath());
             } catch (Exception e) {
                 if (!emitter.isDisposed()) {
                     emitter.onError(e);
