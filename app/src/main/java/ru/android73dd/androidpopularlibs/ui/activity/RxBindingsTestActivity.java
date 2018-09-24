@@ -1,4 +1,4 @@
-package ru.android73dd.androidpopularlibs;
+package ru.android73dd.androidpopularlibs.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import ru.android73dd.androidpopularlibs.R;
 import rx.Subscription;
 import rx.functions.Action1;
 

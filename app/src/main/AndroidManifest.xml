@@ -11,10 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.activity.MainActivity">
         </activity>
 
-        <activity android:name=".RxBindingsTestActivity">
+        <activity android:name=".ui.activity.RxBindingsTestActivity">
         </activity>
 
         <activity android:name=".ui.activity.ConvertImageActivity">

@@ -1,4 +1,4 @@
-package ru.android73dd.androidpopularlibs;
+package ru.android73dd.androidpopularlibs.presentation.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -9,6 +9,8 @@ import io.reactivex.disposables.Disposable;
 import ru.android73dd.androidpopularlibs.bus.EventBus;
 import ru.android73dd.androidpopularlibs.bus.EventBusImpl;
 import ru.android73dd.androidpopularlibs.bus.EventClass;
+import ru.android73dd.androidpopularlibs.model.CounterModel;
+import ru.android73dd.androidpopularlibs.presentation.view.MainView;
 
 
 @InjectViewState

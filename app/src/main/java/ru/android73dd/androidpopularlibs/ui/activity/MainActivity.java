@@ -1,4 +1,4 @@
-package ru.android73dd.androidpopularlibs;
+package ru.android73dd.androidpopularlibs.ui.activity;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -11,18 +11,22 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ru.android73dd.androidpopularlibs.R;
+import ru.android73dd.androidpopularlibs.presentation.presenter.MainPresenter;
+import ru.android73dd.androidpopularlibs.presentation.view.MainView;
 
 
 public class MainActivity extends MvpAppCompatActivity implements MainView
 {
     @BindView(R.id.btn_one)
-    Button buttonOne;
+    public Button buttonOne;
     @BindView(R.id.btn_two)
-    Button buttonTwo;
+    public Button buttonTwo;
     @BindView(R.id.btn_three)
-    Button buttonThree;
+    public Button buttonThree;
 
-    @InjectPresenter MainPresenter presenter;
+    @InjectPresenter
+    public MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
