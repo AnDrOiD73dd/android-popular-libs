@@ -24,7 +24,7 @@ public class ConvertImagePresenter extends MvpPresenter<ConvertImageView> {
     }
 
     public void onChooseImageClick() {
-        getViewState().showChooseImages();
+        getViewState().checkStoragePermission();
     }
 
     public void onCancelClick() {
@@ -57,5 +57,20 @@ public class ConvertImagePresenter extends MvpPresenter<ConvertImageView> {
                         getViewState().updateStatus("Error");
                     }
                 });
+    }
+
+    public void storagePermissionIsAlreadyGranted() {
+        getViewState().showChooseImages();
+    }
+
+    public void storagePermissionNotGranted() {
+        getViewState().requestStoragePermission();
+    }
+
+    public void onGrantStoragePermissionSuccess() {
+        getViewState().showChooseImages();
+    }
+
+    public void onGrantStoragePermissionFail() {
     }
 }

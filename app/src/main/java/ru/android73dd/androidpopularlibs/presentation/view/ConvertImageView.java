@@ -11,4 +11,8 @@ public interface ConvertImageView extends MvpView {
     void showChooseImages();
 
     void updateStatus(String text);
+
+    void checkStoragePermission();
+
+    void requestStoragePermission();
 }
