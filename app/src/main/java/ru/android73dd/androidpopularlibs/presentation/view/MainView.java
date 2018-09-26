@@ -1,4 +1,4 @@
-package ru.android73dd.androidpopularlibs;
+package ru.android73dd.androidpopularlibs.presentation.view;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;

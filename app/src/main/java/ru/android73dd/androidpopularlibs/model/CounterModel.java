@@ -1,4 +1,4 @@
-package ru.android73dd.androidpopularlibs;
+package ru.android73dd.androidpopularlibs.model;
 
 import java.util.ArrayList;
 import java.util.List;
