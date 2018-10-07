@@ -1,4 +1,4 @@
-package ru.geekbrains.android3_5.mvp.model.image;
+package ru.geekbrains.android3_5.mvp.model.image.cache;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,6 +12,7 @@ import io.reactivex.Observable;
 import io.realm.Realm;
 import ru.geekbrains.android3_5.Utils;
 import ru.geekbrains.android3_5.mvp.model.entity.realm.RealmImage;
+import ru.geekbrains.android3_5.mvp.model.image.cache.ImageCache;
 
 
 public class RealmImageCache implements ImageCache {

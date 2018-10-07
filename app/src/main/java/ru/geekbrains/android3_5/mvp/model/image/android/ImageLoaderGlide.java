@@ -12,7 +12,7 @@ import com.bumptech.glide.request.target.Target;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.geekbrains.android3_5.mvp.model.NetworkStatus;
-import ru.geekbrains.android3_5.mvp.model.image.ImageCache;
+import ru.geekbrains.android3_5.mvp.model.image.cache.ImageCache;
 import ru.geekbrains.android3_5.mvp.model.image.ImageLoader;
 
 
