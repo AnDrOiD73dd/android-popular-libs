@@ -16,6 +16,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import ru.geekbrains.android3_5.App;
 import ru.geekbrains.android3_5.R;
 import ru.geekbrains.android3_5.mvp.model.image.ImageLoader;
 import ru.geekbrains.android3_5.mvp.model.image.RealmImageCache;
@@ -62,7 +63,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView
     @ProvidePresenter
     public MainPresenter provideMainPresenter()
     {
-        return new MainPresenter(AndroidSchedulers.mainThread());
+        MainPresenter presenter = new MainPresenter(AndroidSchedulers.mainThread());
+        App.getInstance().getAppComponent().inject(presenter);
+        return presenter;
     }
 
 

@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
 import ru.geekbrains.android3_5.mvp.model.entity.User;
 import ru.geekbrains.android3_5.mvp.model.repo.AAUserCache;
@@ -39,13 +41,12 @@ public class MainPresenter extends MvpPresenter<MainView>
 
     private RepoListPresenter repoListPresenter = new RepoListPresenter();
     private Scheduler scheduler;
-    private IUserRepo userRepo;
+    @Inject IUserRepo userRepo;
     private User user;
 
     public MainPresenter(Scheduler scheduler)
     {
         this.scheduler = scheduler;
-        userRepo = new UserRepo(new PaperUserCache());
     }
 
     @Override

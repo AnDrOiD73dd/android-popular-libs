@@ -5,22 +5,24 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import ru.geekbrains.android3_5.mvp.model.NetworkStatus;
-import ru.geekbrains.android3_5.mvp.model.api.ApiHolder;
+import ru.geekbrains.android3_5.mvp.model.api.ApiService;
 import ru.geekbrains.android3_5.mvp.model.entity.Repository;
 import ru.geekbrains.android3_5.mvp.model.entity.User;
 
 public class UserRepo implements IUserRepo {
 
     private IUserCache cache;
+    private ApiService api;
 
-    public UserRepo(IUserCache cache) {
+    public UserRepo(IUserCache cache, ApiService api) {
         this.cache = cache;
+        this.api = api;
     }
 
     @Override
     public Observable<User> getUser(String username) {
         if (NetworkStatus.isOnline()) {
-            return ApiHolder.getInstance().getApi().getUser(username)
+            return api.getUser(username)
                     .subscribeOn(Schedulers.io())
                     .map(user -> {
                         cache.saveUser(user);
@@ -42,7 +44,7 @@ public class UserRepo implements IUserRepo {
     @Override
     public Observable<List<Repository>> getUserRepos(String username, String url) {
         if (NetworkStatus.isOnline()) {
-            return ApiHolder.getInstance().getApi().getUserRepos(url)
+            return api.getUserRepos(url)
                     .subscribeOn(Schedulers.io())
                     .map(repos -> {
                         cache.deleteRepos(username);
