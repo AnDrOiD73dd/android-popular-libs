@@ -4,6 +4,7 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import ru.geekbrains.android3_5.mvp.model.image.cache.ActiveAndroidImageCache;
 import ru.geekbrains.android3_5.mvp.model.image.cache.ImageCache;
 import ru.geekbrains.android3_5.mvp.model.image.cache.PaperImageCache;
 import ru.geekbrains.android3_5.mvp.model.image.cache.RealmImageCache;
@@ -28,5 +29,11 @@ public class CacheModule {
     @Provides
     public ImageCache paperImageCache() {
         return new PaperImageCache();
+    }
+
+    @Named("ActiveAndroid")
+    @Provides
+    public ImageCache activeAndroidImageCache() {
+        return new ActiveAndroidImageCache();
     }
 }
