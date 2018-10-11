@@ -66,7 +66,7 @@ public class MainPresenterUnitTest {
                     @Override
                     public IUserRepo usersRepo() {
                        IUserRepo repo = super.usersRepo();
-                       Mockito.when(repo.getUser("googlesamples")).thenReturn(Observable.just(user));
+                       Mockito.when(repo.getUser(user.getLogin())).thenReturn(Observable.just(user));
                        Mockito.when(repo.getUserRepos(user)).thenReturn(Observable.just(new ArrayList<>()));
                        return repo;
                     }
@@ -86,6 +86,25 @@ public class MainPresenterUnitTest {
 
     @Test
     public void loadInfoFailure() {
+        User user = new User("googlesamples", "avatarUrl");
+        String errorText = "error while loading user";
+        TestComponent component = DaggerTestComponent.builder()
+                .testRepoModule(new TestRepoModule() {
+                    @Override
+                    public IUserRepo usersRepo() {
+                        IUserRepo repo = super.usersRepo();
+                        Mockito.when(repo.getUser(user.getLogin())).thenReturn(Observable
+                                .error(new Throwable(errorText)));
+                        return repo;
+                    }
+                }).build();
 
+        component.inject(presenter);
+        presenter.attachView(mainView);
+        Mockito.verify(presenter).loadInfo();
+        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS);
+
+        Mockito.verify(mainView).showError(errorText);
+        Mockito.verify(mainView).hideLoading();
     }
 }
