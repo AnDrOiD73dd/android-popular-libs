@@ -54,15 +54,16 @@ public class UserRepoInstrumentedTest {
 
     @Test
     public void getUser(){
-        mockWebServer.enqueue(createUserResponse("someuser", "someurl"));
+        User user = new User("someuser", "someurl");
+        mockWebServer.enqueue(createUserResponse(user.getLogin(), user.getAvatarUrl()));
         TestObserver<User> observer = new TestObserver<>();
-        usersRepo.getUser("somelogin").subscribe(observer);
+        usersRepo.getUser(user.getLogin()).subscribe(observer);
 
         observer.awaitTerminalEvent();
 
         observer.assertValueCount(1);
-        assertEquals(observer.values().get(0).getLogin(), "someuser");
-        assertEquals(observer.values().get(0).getAvatarUrl(), "someurl");
+        assertEquals(observer.values().get(0).getLogin(), user.getLogin());
+        assertEquals(observer.values().get(0).getAvatarUrl(), user.getAvatarUrl());
 
     }
 
