@@ -11,6 +11,7 @@ import io.realm.RealmConfiguration;
 import ru.geekbrains.android3_5.mvp.di.AppComponent;
 import ru.geekbrains.android3_5.mvp.di.DaggerAppComponent;
 import ru.geekbrains.android3_5.mvp.di.modules.AppModule;
+import ru.geekbrains.android3_5.mvp.model.entity.activeandroid.AAImage;
 import ru.geekbrains.android3_5.mvp.model.entity.activeandroid.AARepository;
 import ru.geekbrains.android3_5.mvp.model.entity.activeandroid.AAUser;
 import timber.log.Timber;
@@ -31,6 +32,7 @@ public class App extends Application
                 .setDatabaseName("MyDb.db")
                 .addModelClass(AAUser.class)
                 .addModelClass(AARepository.class)
+                .addModelClass(AAImage.class)
                 .create();
         ActiveAndroid.initialize(dbConfiguration);
 //        ActiveAndroid.initialize(this);
