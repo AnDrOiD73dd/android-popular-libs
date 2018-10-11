@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    tools:context="ru.geekbrains.android3_5.ui.MainActivity"
+    tools:context="ru.geekbrains.android3_7.view.MainActivity"
     android:gravity="center">
 
     <TextView
